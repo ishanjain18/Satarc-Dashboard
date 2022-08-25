@@ -34,6 +34,8 @@ import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
 
+const axios = require("axios");
+
 const mainChartData = getMainChartData();
 const PieChartData = [
   { name: "North", value: 400, color: "primary" },
@@ -41,16 +43,30 @@ const PieChartData = [
   { name: "West", value: 300, color: "warning" },
   { name: "South", value: 200, color: "success" },
 ];
+const fetchdata = async () => {
+  axios
+    .get("https://bpp8n7mg56.execute-api.us-east-1.amazonaws.com/dev/tips")
+    .then((res) => {
+      console.log(`statusCode: ${res.status}`);
+      <Table data={res.data} />;
+      console.log(res.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
+  {
+    fetchdata();
+  }
 
   // local
   var [mainChartState, setMainChartState] = useState("monthly");
   const [category, setCategory] = useState("");
   const categories = ["LIVE", "URGENT", "VERIFIED", "ANONYMOUS"];
-
   return (
     <>
       <PageTitle
@@ -61,16 +77,6 @@ export default function Dashboard(props) {
           </Button>
         }
       />
-      <Grid item xs={12}>
-        <Widget
-          title="Support Requests"
-          upperTitle
-          noBodyPadding
-          bodyClass={classes.tableWidget}
-        >
-          {/* <Table data={mock.table} /> */}
-        </Widget>
-      </Grid>
 
       <br></br>
       <div style={{ width: "100%", height: "500px" }}>
@@ -108,9 +114,7 @@ export default function Dashboard(props) {
             border: "1px solid lightgray",
             borderWidth: "0px 1px 1px 1px",
           }}
-        >
-          <Table data={mock.table} />
-        </div>
+        ></div>
       </div>
       <br></br>
 
