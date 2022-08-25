@@ -1,4 +1,5 @@
 import React from "react";
+import marker from "./markers.json";
 import {
   withGoogleMap,
   withScriptjs,
@@ -14,11 +15,21 @@ const BasicMap = withScriptjs(
     <GoogleMap
       defaultZoom={12}
       defaultCenter={{
-        lat: parseFloat(-37.813179),
-        lng: parseFloat(144.950259),
+        lat: parseFloat(28.6448),
+        lng: parseFloat(77.216721),
       }}
     >
-      <Marker position={{ lat: -37.813179, lng: 144.950259 }} />
+      {marker.features.map((feature) => (
+        <Marker
+          style={{ color: "black" }}
+          position={{
+            lat: feature.geometry.coordinates[1],
+            lng: feature.geometry.coordinates[0],
+          }}
+        />
+      ))}
+
+      <Marker position={{ lat: 28.737324, lng: 77.090981 }} />
     </GoogleMap>
   )),
 );
