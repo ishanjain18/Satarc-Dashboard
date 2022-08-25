@@ -36,10 +36,10 @@ import BigStat from "./components/BigStat/BigStat";
 
 const mainChartData = getMainChartData();
 const PieChartData = [
-  { name: "Group A", value: 400, color: "primary" },
-  { name: "Group B", value: 300, color: "secondary" },
-  { name: "Group C", value: 300, color: "warning" },
-  { name: "Group D", value: 200, color: "success" },
+  { name: "North", value: 400, color: "primary" },
+  { name: "East", value: 300, color: "secondary" },
+  { name: "West", value: 300, color: "warning" },
+  { name: "South", value: 200, color: "success" },
 ];
 
 export default function Dashboard(props) {
@@ -57,7 +57,7 @@ export default function Dashboard(props) {
         title="Dashboard"
         button={
           <Button variant="contained" size="medium" color="secondary">
-            Latest Reports
+            Live Tips
           </Button>
         }
       />
@@ -101,7 +101,14 @@ export default function Dashboard(props) {
           })}
         </div>
 
-        <div style={{ height: "88%", width: "100%", border: "1px solid lightgray", borderWidth: "0px 1px 1px 1px" }}>
+        <div
+          style={{
+            height: "88%",
+            width: "100%",
+            border: "1px solid lightgray",
+            borderWidth: "0px 1px 1px 1px",
+          }}
+        >
           <Table data={mock.table} />
         </div>
       </div>
@@ -110,7 +117,7 @@ export default function Dashboard(props) {
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
-            title="Visits Today"
+            title="Tips Today"
             upperTitle
             bodyClass={classes.fullHeightBody}
             className={classes.card}
@@ -153,13 +160,13 @@ export default function Dashboard(props) {
             >
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
-                  Registrations
+                  Resolved
                 </Typography>
                 <Typography size="md">860</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
-                  Sign Out
+                  Pending
                 </Typography>
                 <Typography size="md">32</Typography>
               </Grid>
@@ -237,7 +244,7 @@ export default function Dashboard(props) {
         </Grid>
         <Grid item lg={3} md={8} sm={6} xs={12}>
           <Widget
-            title="Server Overview"
+            title="Activity Overview"
             upperTitle
             className={classes.card}
             bodyClass={classes.fullHeightBody}
@@ -249,7 +256,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                60% / 37°С / 3.3 Ghz
+                Urgent
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -273,7 +280,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                54% / 31°С / 3.3 Ghz
+                Verified
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -297,7 +304,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                57% / 21°С / 3.3 Ghz
+                Anonymous
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -317,7 +324,7 @@ export default function Dashboard(props) {
           </Widget>
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Widget title="Revenue Breakdown" upperTitle className={classes.card}>
+          <Widget title="Area Breakdown" upperTitle className={classes.card}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <ResponsiveContainer width="100%" height={144}>
@@ -368,25 +375,25 @@ export default function Dashboard(props) {
                   color="text"
                   colorBrightness="secondary"
                 >
-                  Daily Line Chart
+                  Tips Chart
                 </Typography>
                 <div className={classes.mainChartHeaderLabels}>
                   <div className={classes.mainChartHeaderLabel}>
                     <Dot color="warning" />
                     <Typography className={classes.mainChartLegentElement}>
-                      Tablet
+                      Tips
                     </Typography>
                   </div>
                   <div className={classes.mainChartHeaderLabel}>
                     <Dot color="primary" />
                     <Typography className={classes.mainChartLegentElement}>
-                      Mobile
+                      Response
                     </Typography>
                   </div>
                   <div className={classes.mainChartHeaderLabel}>
                     <Dot color="secondary" />
                     <Typography className={classes.mainChartLegentElement}>
-                      Desktop
+                      Spam
                     </Typography>
                   </div>
                 </div>

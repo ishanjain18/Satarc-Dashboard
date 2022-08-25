@@ -67,10 +67,10 @@ const lineChartData = [
 ];
 
 const pieChartData = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
+  { name: "North", value: 400 },
+  { name: "East", value: 300 },
+  { name: "West", value: 300 },
+  { name: "South", value: 200 },
 ];
 
 export default function Charts(props) {
@@ -81,15 +81,14 @@ export default function Charts(props) {
 
   return (
     <>
-      <PageTitle title="Charts Page - Data Display" button={
-        <Button
-          variant="contained"
-          size="medium"
-          color="secondary"
-        >
-          Latest Reports
-        </Button>
-      } />
+      <PageTitle
+        title="Charts Page - Data Display"
+        button={
+          <Button variant="contained" size="medium" color="secondary">
+            Latest Reports
+          </Button>
+        }
+      />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Widget title="Apex Line Chart" upperTitle noBodyPadding>
