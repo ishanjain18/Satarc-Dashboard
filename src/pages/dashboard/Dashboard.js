@@ -68,14 +68,16 @@ export default function Dashboard(props) {
   const categories = ["LIVE", "URGENT", "VERIFIED", "ANONYMOUS"];
   const [activeMenu, setActiveMenu] = useState(categories[0]);
 
-  // array of Tips
+  // array of tips
   React.useEffect(() => {
-    const response = fetchdata().then((data) => {
-      console.log(data);
-      if (data) {
-        setTableData(data);
-      }
-    });
+    setInterval(() => {
+      const response = fetchdata().then((data) => {
+        console.log(data);
+        if (data) {
+          setTableData([...data]);
+        }
+      });
+    }, 2000);
   }, []);
 
   return (
