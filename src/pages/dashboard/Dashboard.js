@@ -71,7 +71,6 @@ export default function Dashboard(props) {
 
   // array of tips
   React.useEffect(() => {
-<<<<<<< HEAD
     // setInterval(() => {
     const response = fetchdata().then((data) => {
       console.log(data);
@@ -80,18 +79,6 @@ export default function Dashboard(props) {
       }
     });
     // }, 2000);
-=======
-    setInterval(() => {
-      const response = fetchdata().then((data) => {
-        console.log(data);
-        setCount(data.length);
-        console.log(activeCount);
-        if (data) {
-          setTableData([...data]);
-        }
-      });
-    }, 2000);
->>>>>>> origin/updates
   }, []);
 
   return (

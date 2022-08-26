@@ -69,27 +69,28 @@ export default function TableComponent({ data }) {
         </TableRow>
       </TableHead>
       <TableBody style={{ width: "100%" }}>
-        {data.map(({ tip_id, created, formData, status }) => {
-          const dateTime = new Date(created);
+        {data.map((sample) => {
+          const dateTime = new Date(sample?.created);
           const createdOn = dateTime.toString();
 
-          const sample = {
-            // 8 Options
-            created: createdOn, // timeStamp
-            tip_id: "23xd-adfk",
-            time: "22:28 PM", // reported time of crime
-            location: "SVCET, PuduCherry", // string -> Exact Address from Form
-            crime_type: "Physical Assault", // categories mentioned in notebook
-            status: "status", // ['pending', 'resolved', 'spam']
-            user_rating: "77", // string
-            description: "Male driver struck elderly woman outside hostel road", //string
-            user_verified: true, // boolean
-            is_anonymous: true, // boolean
-            suspect_info: "short, wears glasses", // string
-            regarding: "Organization", // string,
-            evidence: "image.jpg", // string, image url
-            exactAddress: "paschim Vihar",
-          };
+          // const sample = {
+          //   // 8 Options
+          //   created: createdOn, // timeStamp
+          //   tip_id: "23xd-adfk",
+          //   time: "22:28 PM", // reported time of crime
+          //   location: "SVCET, PuduCherry", // string -> Exact Address from Form
+          //   crime_type: "Physical Assault", // categories mentioned in notebook
+          //   status: "status", // ['pending', 'resolved', 'spam']
+          //   user_rating: "77", // string
+          //   description: "Male driver struck elderly woman outside hostel road", //string
+          //   user_verified: true, // boolean
+          //   is_anonymous: true, // boolean
+          //   suspect: "",
+          //   suspect_info: "short, wears glasses", // string
+          //   regarding: "Organization", // string,
+          //   evidence: "image.jpg", // string, image url
+          //   exactAddress: "paschim Vihar",
+          // };
           const currentTime = Date.now();
 
           const isActive = currentTime - sample?.time > 600000;
@@ -97,17 +98,16 @@ export default function TableComponent({ data }) {
             isActive * 1 +
             Boolean(sample?.exactAddress) * 1 +
             weights[sample?.crime_type] +
-            Boolean(sample?.suspect_info) * 1 +
-            Boolean(sample?.evidence) * 1 +
-            sample?.user_verified * 1;
+            Boolean(sample?.suspect) * 1 +
+            Boolean(sample?.evidence) * 1;
 
           return (
-            <TableRow key={tip_id}>
-              <TableCell className="pl-3 fw-normal">{sample.created}</TableCell>
+            <TableRow key={sample?.tip_id}>
+              <TableCell className="pl-3 fw-normal">{createdOn}</TableCell>
               <TableCell>{sample?.regarding}</TableCell>
 
               <TableCell>
-                {sample?.user_verified ? "Available" : "Unavailable"}
+                {Math.random() > 0.5 ? "Available" : "Unavailable"}
               </TableCell>
               <TableCell>
                 {sample?.is_anonymous ? "Anonymous" : "Verified"}
@@ -118,8 +118,10 @@ export default function TableComponent({ data }) {
               <TableCell>{rating}</TableCell>
               <TableCell>
                 <Chip
-                  label={status}
-                  classes={{ root: classes[states[status.toLowerCase()]] }}
+                  label={sample?.status}
+                  classes={{
+                    root: classes[states[sample?.status.toLowerCase()]],
+                  }}
                 />
               </TableCell>
               <TableCell>
