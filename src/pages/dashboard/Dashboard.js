@@ -34,6 +34,8 @@ import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
 
+const axios = require("axios");
+
 const mainChartData = getMainChartData();
 const PieChartData = [
   { name: "North", value: 400, color: "primary" },
@@ -45,11 +47,36 @@ const PieChartData = [
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
+  const [tableData, setTableData] = useState([]);
+
+  const fetchdata = async () => {
+    return axios
+      .get("https://bpp8n7mg56.execute-api.us-east-1.amazonaws.com/dev/tips")
+      .then((res) => {
+        console.log(`statusCode: ${res.status}`);
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   // local
   var [mainChartState, setMainChartState] = useState("monthly");
   const [category, setCategory] = useState("");
   const categories = ["LIVE", "URGENT", "VERIFIED", "ANONYMOUS"];
+  const [activeMenu, setActiveMenu] = useState(categories[0]);
+
+  // array of Tips
+  React.useEffect(() => {
+    const response = fetchdata().then((data) => {
+      console.log(data);
+      if (data) {
+        setTableData(data);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -61,16 +88,6 @@ export default function Dashboard(props) {
           </Button>
         }
       />
-      <Grid item xs={12}>
-        <Widget
-          title="Support Requests"
-          upperTitle
-          noBodyPadding
-          bodyClass={classes.tableWidget}
-        >
-          {/* <Table data={mock.table} /> */}
-        </Widget>
-      </Grid>
 
       <br></br>
       <div style={{ width: "100%", height: "500px" }}>
@@ -85,7 +102,9 @@ export default function Dashboard(props) {
           {categories.map((category) => {
             return (
               <div
-                onClick={() => setCategory(category)}
+                onClick={() => {
+                  setCategory(category);
+                }}
                 style={{
                   flex: 1,
                   display: "flex",
@@ -109,7 +128,7 @@ export default function Dashboard(props) {
             borderWidth: "0px 1px 1px 1px",
           }}
         >
-          <Table data={mock.table} />
+          <Table data={tableData}></Table>
         </div>
       </div>
       <br></br>
