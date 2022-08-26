@@ -74,6 +74,8 @@ export default function Dashboard(props) {
     // setInterval(() => {
     const response = fetchdata().then((data) => {
       console.log(data);
+      setCount(data.length);
+      console.log(activeCount);
       if (data) {
         setTableData([...data]);
       }
