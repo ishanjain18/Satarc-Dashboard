@@ -43,30 +43,41 @@ const PieChartData = [
   { name: "West", value: 300, color: "warning" },
   { name: "South", value: 200, color: "success" },
 ];
-const fetchdata = async () => {
-  axios
-    .get("https://bpp8n7mg56.execute-api.us-east-1.amazonaws.com/dev/tips")
-    .then((res) => {
-      console.log(`statusCode: ${res.status}`);
-      <Table data={res.data} />;
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
 
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
-  {
-    fetchdata();
-  }
+  const [tableData, setTableData] = useState([]);
+
+  const fetchdata = async () => {
+    return axios
+      .get("https://bpp8n7mg56.execute-api.us-east-1.amazonaws.com/dev/tips")
+      .then((res) => {
+        console.log(`statusCode: ${res.status}`);
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   // local
   var [mainChartState, setMainChartState] = useState("monthly");
   const [category, setCategory] = useState("");
   const categories = ["LIVE", "URGENT", "VERIFIED", "ANONYMOUS"];
+  const [activeMenu, setActiveMenu] = useState(categories[0]);
+
+  // array of Tips
+  React.useEffect(() => {
+    const response = fetchdata().then((data) => {
+      console.log(data);
+      if (data) {
+        setTableData(data);
+      }
+    });
+  }, []);
+
   return (
     <>
       <PageTitle
@@ -91,7 +102,9 @@ export default function Dashboard(props) {
           {categories.map((category) => {
             return (
               <div
-                onClick={() => setCategory(category)}
+                onClick={() => {
+                  setCategory(category);
+                }}
                 style={{
                   flex: 1,
                   display: "flex",
@@ -114,7 +127,9 @@ export default function Dashboard(props) {
             border: "1px solid lightgray",
             borderWidth: "0px 1px 1px 1px",
           }}
-        ></div>
+        >
+          <Table data={tableData}></Table>
+        </div>
       </div>
       <br></br>
 
