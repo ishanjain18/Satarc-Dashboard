@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { MenuItem, Button } from "@material-ui/core";
 import {
   Table,
@@ -11,6 +12,7 @@ import {
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 import useStyles from "../../styles";
+import { useHistory } from "react-router-dom";
 
 const states = {
   resolved: "success",
@@ -33,7 +35,7 @@ const weights = {
   missing: 4,
   road_rage: 6,
 };
-export default function TableComponent({ data }) {
+export default function TableComponent({ data, navigation }) {
   const classes = useStyles();
   let keys = [
     "Submit Time",
@@ -139,17 +141,28 @@ export default function TableComponent({ data }) {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem
-                      onClick={() => {
-                        // redirect to /app/tip-finder
-                        // send sample as prop
+                    <Route
+                      render={({ history }) => (
+                        <MenuItem
+                          onClick={() => {
+                            {
+                              history.push({
+                                pathname: "/app/tip-finder",
+                                state: { sample },
+                              });
+                            }
+                            // redirect to /app/tip-finder
+                            // send sample as prop
 
-                        handleClose();
-                      }}
-                    >
-                      <Icons.Pageview style={{ marginRight: 16 }} /> Show
-                      Details
-                    </MenuItem>
+                            handleClose();
+                          }}
+                        >
+                          <Icons.Pageview style={{ marginRight: 16 }} /> Show
+                          Details
+                        </MenuItem>
+                      )}
+                    />
+
                     <MenuItem onClick={handleClose}>
                       <Icons.DeleteSweep style={{ marginRight: 16 }} /> Mark
                       Spam
