@@ -67,12 +67,15 @@ export default function Dashboard(props) {
   const [category, setCategory] = useState("");
   const categories = ["LIVE", "URGENT", "VERIFIED", "ANONYMOUS"];
   const [activeMenu, setActiveMenu] = useState(categories[0]);
+  var [activeCount, setCount] = useState(0);
 
   // array of tips
   React.useEffect(() => {
     setInterval(() => {
       const response = fetchdata().then((data) => {
         console.log(data);
+        setCount(data.length);
+        console.log(activeCount);
         if (data) {
           setTableData([...data]);
         }
@@ -92,7 +95,7 @@ export default function Dashboard(props) {
       />
 
       <br></br>
-      <div style={{ width: "100%", height: "500px" }}>
+      <div style={{ width: "100%" }}>
         {/* header */}
         <div
           style={{
@@ -147,7 +150,7 @@ export default function Dashboard(props) {
               <Grid container item alignItems={"center"}>
                 <Grid item xs={6}>
                   <Typography size="xl" weight="medium" noWrap>
-                    12, 678
+                    {activeCount}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -183,13 +186,13 @@ export default function Dashboard(props) {
                 <Typography color="text" colorBrightness="secondary" noWrap>
                   Resolved
                 </Typography>
-                <Typography size="md">860</Typography>
+                <Typography size="md">2</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
                   Pending
                 </Typography>
-                <Typography size="md">32</Typography>
+                <Typography size="md">1</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
